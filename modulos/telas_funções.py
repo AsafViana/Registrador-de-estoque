@@ -2,6 +2,7 @@ from modulos.fire import *
 from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
+from modulos.criptografia import criptografar, descriptografar
 
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
@@ -13,6 +14,7 @@ dire = dire[:tirar]
 def guardar_loja(loja):
     url = dire + 'modulos\credenciais\loja.txt'
     system('NUL> ' + url)
+    print(loja)
     with open(url, 'w') as arquivo:
         arquivo.write(loja)
 
@@ -21,7 +23,6 @@ def receber_loja():
     url = dire + 'modulos\credenciais\loja.txt'
     with open(url, 'r') as arquivo:
         loja = arquivo.read()
-    print(loja)
     return loja
 
 
@@ -47,6 +48,8 @@ def recebercripto():
             credenciais[tag[c]] = x
             c += 1
     return credenciais
+
+
 # ======================================================
 
 usuarios = refusuario.get()
@@ -133,9 +136,9 @@ def chama_segunda_tela():
     parametros_nomes = loja_mercadoria_e_parametros_endereço()[2]
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
-
     try:
-        for x in range(0, len(mercadoria_lista[1])):
+
+        for x in range(0, len(mercadoria_lista)):
             formulario_tela.tabela.setItem(x, 0, QtWidgets.QTableWidgetItem(mercadoria_lista[x]))
             i = endereço.child(mercadoria_lista[x])
             informações_produtos = i.get()
@@ -234,7 +237,7 @@ def salvar_valor_editado():
 
     # atualizar as janelas
     tela_editar.close()
-    formulario_tela.show()
+    chama_segunda_tela()
 
 
 enviarCripto(usuarios['asaf'])
@@ -274,6 +277,8 @@ def cadastro():
 
 
 dados_local = recebercripto()
+
+
 # ============================================
 
 def loja_mercadoria_e_parametros_endereço():
@@ -286,6 +291,8 @@ def loja_mercadoria_e_parametros_endereço():
 
     except:
         pass
+
+
 # ======================================================
 
 app = QtWidgets.QApplication([])

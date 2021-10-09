@@ -1,8 +1,5 @@
-def a():
-    a = 'a'
-    b = 'b'
-    c = ['categoria', 'codigo', 'preço']
-    return a, b, c
+from modulos.criptografia import *
 
-a = a()[1]
-print(a)
+
+print(descriptografar('ormd#5') + '\n')
+print(criptografar('loja'))
