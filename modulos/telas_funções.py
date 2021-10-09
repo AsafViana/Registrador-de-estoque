@@ -3,21 +3,26 @@ from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
 
-
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
 dire = dire[:tirar]
+
+
 # =======================================================
 
 def guardar_loja(loja):
-    url = 'credenciais\loja.txt'
+    url = dire + 'modulos\credenciais\loja.txt'
     system('NUL> ' + url)
     with open(url, 'w') as arquivo:
         arquivo.write(loja)
 
 
 def receber_loja():
-    pass
+    url = dire + 'modulos\credenciais\loja.txt'
+    with open(url, 'r') as arquivo:
+        loja = arquivo.read()
+    print(loja)
+    return loja
 
 
 def enviarCripto(dados):
@@ -74,9 +79,9 @@ def logar():
 
         enviarCripto({'usuario': usuario, 'senha': senha_banco, })
         formulario_tela.show()
+        guardar_loja(loja)
         chama_segunda_tela()
         login.close()
-        return loja
 
     else:
         alert('Usuario incorreto')
@@ -99,9 +104,10 @@ def cadastrar_produto():
         item['categoria'] = "Eletronicos"
 
     try:
+        nome_loja = loja_mercadoria_e_parametros_endereço()[0]
         adicionar(
             lista=item,
-            loja=loja,
+            loja=nome_loja,
             produto=produto
         )
 
@@ -122,11 +128,14 @@ def chama_segunda_tela():
     formulario_tela.tabela.setColumnWidth(1, 170)
     formulario.close()
     formulario_tela.show()
+    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
+    endereço = loja_mercadoria_e_parametros_endereço()[3]
+    parametros_nomes = loja_mercadoria_e_parametros_endereço()[2]
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
 
     try:
-        for x in range(0, len(mercadoria_lista)):
+        for x in range(0, len(mercadoria_lista[1])):
             formulario_tela.tabela.setItem(x, 0, QtWidgets.QTableWidgetItem(mercadoria_lista[x]))
             i = endereço.child(mercadoria_lista[x])
             informações_produtos = i.get()
@@ -157,11 +166,14 @@ def excluir():
     linha = formulario_tela.tabela.currentRow()
 
     # apagando as linhas no banco e na interface
+    endereço = loja_mercadoria_e_parametros_endereço()[3]
+    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
     formulario_tela.tabela.removeRow(linha)
     endereço.child(mercadoria_lista[linha]).delete()
 
 
 def pdf():
+    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
     estoque_nome = list(mercadoria_lista.get())
     dados_lidos = []
 
@@ -182,6 +194,9 @@ def abrir_editar():
 
 
 def editar_dados():
+    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
+    endereço = loja_mercadoria_e_parametros_endereço()[3]
+    parametros_nomes = loja_mercadoria_e_parametros_endereço()[2]
     abrir_editar()
 
     linha = formulario_tela.tabela.currentRow()
@@ -196,6 +211,10 @@ def editar_dados():
 
 
 def salvar_valor_editado():
+    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
+    endereço = loja_mercadoria_e_parametros_endereço()[3]
+    parametros_nomes = loja_mercadoria_e_parametros_endereço()[2]
+    loja = loja_mercadoria_e_parametros_endereço()[0]
     linha = formulario_tela.tabela.currentRow()
 
     # ler dados do lineEdit
@@ -257,14 +276,16 @@ def cadastro():
 dados_local = recebercripto()
 # ============================================
 
-loja = receber_loja()
-try:
-    endereço = refstoque.child(loja)
-    mercadoria_lista = list(endereço.get())
-    parametros_nomes = ['categoria', 'codigo', 'preço']
+def loja_mercadoria_e_parametros_endereço():
+    loja = receber_loja()
+    try:
+        endereço = refstoque.child(loja)
+        mercadoria = list(endereço.get())
+        parametros_nomes = ['categoria', 'codigo', 'preço']
+        return loja, mercadoria, parametros_nomes, endereço
 
-except:
-    pass
+    except:
+        pass
 # ======================================================
 
 app = QtWidgets.QApplication([])

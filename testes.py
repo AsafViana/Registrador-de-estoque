@@ -1,7 +1,8 @@
-from os import system
+def a():
+    a = 'a'
+    b = 'b'
+    c = ['categoria', 'codigo', 'preço']
+    return a, b, c
 
-
-def receber_loja():
-    url = 'loja.txt'
-    with open()
-    pass
+a = a()[1]
+print(a)
