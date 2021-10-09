@@ -1,1 +1,1 @@
-Registrador de estoque
+Registrador de estoque com firebase
