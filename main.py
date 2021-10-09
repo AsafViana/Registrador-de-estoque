@@ -1,11 +1,9 @@
 from modulos.telas_funções import *
 
 
-usuarios = refusuario.get()
-# =================================================================
-
-dados = recebercripto()
 try:
+    usuarios = refusuario.get()
+    dados = recebercripto()
     login.usuario.setText(dados['usuario'][:-1])
     login.senha.setText(dados['senha'][:-1])
 except AttributeError:
@@ -21,7 +19,7 @@ tela_editar.salvar.clicked.connect(salvar_valor_editado)
 login.entrar.clicked.connect(logar)
 login.cadastrar.clicked.connect(cadastrar_tela)
 cadastrar.cadastrar.clicked.connect(cadastro)
-
+# ======================================================
 
 login.show()
 app.exec()
