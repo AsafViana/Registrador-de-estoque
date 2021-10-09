@@ -6,8 +6,8 @@ usuarios = refusuario.get()
 
 dados = recebercripto()
 try:
-    login.usuario.setText(dados['usuario'])
-    login.senha.setText(dados['senha'])
+    login.usuario.setText(dados['usuario'][:-1])
+    login.senha.setText(dados['senha'][:-1])
 except AttributeError:
     pass
 
@@ -23,6 +23,6 @@ login.cadastrar.clicked.connect(cadastrar_tela)
 cadastrar.cadastrar.clicked.connect(cadastro)
 
 
-formulario_tela.show()
-chama_segunda_tela()
+login.show()
 app.exec()
+exit()

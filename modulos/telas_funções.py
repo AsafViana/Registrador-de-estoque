@@ -1,6 +1,7 @@
 from modulos.fire import *
 from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
+from os import system
 
 
 dire = os.path.dirname(os.path.realpath(__file__))
@@ -8,17 +9,29 @@ tirar = dire.find('modulos')
 dire = dire[:tirar]
 # =======================================================
 
-loja = 'loja 2'
-try:
-    endereço = refstoque.child(loja)
-    mercadoria_lista = list(endereço.get())
-    parametros_nomes = ['categoria', 'codigo', 'preço']
+def guardar_loja(loja):
+    url = 'credenciais\loja.txt'
+    system('NUL> ' + url)
+    with open(url, 'w') as arquivo:
+        arquivo.write(loja)
 
-except:
+
+def receber_loja():
     pass
-# ======================================================
 
-usuarios = refusuario.get()
+
+def enviarCripto(dados):
+    tags = ['usuario', 'senha']
+    novos_dados = dados
+    # print(novos_dados)
+    with open('modulos\credenciais\conta_salva.txt', 'w') as arquivo:
+        for c in range(0, 2):
+            # print(dados[tags[c]])
+            if dados_local != dados:
+                arquivo.write(novos_dados[tags[c]] + '\n')
+            else:
+                pass
+
 
 def recebercripto():
     tag = ['usuario', 'senha']
@@ -29,27 +42,27 @@ def recebercripto():
             credenciais[tag[c]] = x
             c += 1
     return credenciais
+# ======================================================
 
+usuarios = refusuario.get()
 dados_local = recebercripto()
+
 
 def logar():
     usuario = login.usuario.text()
     senha_tela = login.senha.text()
     usuarios_lista = list(usuarios.keys())
     usuarios_lista.append(usuario)
-    print(usuario in usuarios_lista)
 
-    if usuario in list(usuarios.keys()):
+    if usuario in usuarios_lista:
         dados_banco = usuarios[usuario]
         senha_banco = dados_banco['senha']
-        print(dados_banco, senha_banco)
         loja = dados_banco['loja']
         if senha_banco != senha_tela:
             alert('Senha incorreta')
 
         else:  # cadastro deu certo
             alert(f'Bem vindo de volta, {usuario[0].upper() + usuario[1:].lower()}')
-            informações = usuarios[usuario]
             enviarCripto({'usuario': usuario, 'senha': senha_banco})
 
             if loja not in list(refstoque.get()):
@@ -59,12 +72,11 @@ def logar():
                     alert('Preencha o formulario a seguir:')
                     cadastrar_tela()
 
-            enviarCripto({'usuario': usuario, 'senha': senha_banco,})
-            formulario_tela.show()
-            chama_segunda_tela()
-            login.close()
-
-
+        enviarCripto({'usuario': usuario, 'senha': senha_banco, })
+        formulario_tela.show()
+        chama_segunda_tela()
+        login.close()
+        return loja
 
     else:
         alert('Usuario incorreto')
@@ -75,15 +87,15 @@ def cadastrar_produto():
     produto = formulario.produto.text()
 
     if formulario.eletronicos.isChecked():
-        #print("Categoria Eletronicos selecionada")
+        # print("Categoria Eletronicos selecionada")
         item['categoria'] = "Informatica"
 
     elif formulario.alimentos.isChecked():
-        #print("Categoria Alimentos selecionada")
+        # print("Categoria Alimentos selecionada")
         item['categoria'] = "Alimentos"
 
     else:
-        #print("Categoria Eletronicos selecionada")
+        # print("Categoria Eletronicos selecionada")
         item['categoria'] = "Eletronicos"
 
     try:
@@ -110,7 +122,6 @@ def chama_segunda_tela():
     formulario_tela.tabela.setColumnWidth(1, 170)
     formulario.close()
     formulario_tela.show()
-
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
 
@@ -161,7 +172,7 @@ def pdf():
         for informações in parametros:
             tudo[informações] = parametros[informações]
         dados_lidos.append(list(tudo.values()))
-    #print(dados_lidos)
+    # print(dados_lidos)
     alert("PDF FOI GERADO COM SUCESSO!")
 
 
@@ -207,20 +218,8 @@ def salvar_valor_editado():
     formulario_tela.show()
 
 
-def enviarCripto(dados):
-    tags = ['usuario', 'senha']
-    novos_dados = dados
-    #print(novos_dados)
-    with open('modulos\credenciais\conta_salva.txt', 'w') as arquivo:
-        for c in range(0, 2):
-            #print(dados[tags[c]])
-            if dados_local != dados:
-                arquivo.write(novos_dados[tags[c]] + '\n')
-            else:
-                pass
-
-
 enviarCripto(usuarios['asaf'])
+
 
 def cadastrar_tela():
     cadastrar.show()
@@ -254,8 +253,19 @@ def cadastro():
     login.show()
     cadastrar.close()
 
+
 dados_local = recebercripto()
 # ============================================
+
+loja = receber_loja()
+try:
+    endereço = refstoque.child(loja)
+    mercadoria_lista = list(endereço.get())
+    parametros_nomes = ['categoria', 'codigo', 'preço']
+
+except:
+    pass
+# ======================================================
 
 app = QtWidgets.QApplication([])
 formulario = uic.loadUi("telas/formulario.ui")
@@ -263,3 +273,9 @@ formulario_tela = uic.loadUi("telas/listar_dados.ui")
 tela_editar = uic.loadUi("telas/menu_editar.ui")
 login = uic.loadUi("telas/login.ui")
 cadastrar = uic.loadUi("telas/cadastrar_login.ui")
+
+formulario_tela.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+formulario.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+tela_editar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+login.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+cadastrar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
