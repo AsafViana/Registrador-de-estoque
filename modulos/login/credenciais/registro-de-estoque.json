@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "registro-de-estoque",
+  "private_key_id": "580b165e795a1367b3eecb70b43451aea33fb25d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1EKoX36NcO6sM\n69FORABq6nXu7J7HTSxvWi6yM1Gd7NTVAZ/eL0IeDZt0emUEBy45/onp5d2yVkZg\nYDVRYyfEQhbxd9rFo6kixfFVPu5olF1LmCEbLjXoS8XIGIHZk3U8Q6ewv/+n8iTZ\nJChFmAv1WJLfWaQ6mJ58Ge6EK58pbnZODXQugWsZIFGI0sQq/uT6sfUpwYc7V2dL\nqSLvJ0WTymQd7Qtl0MP876mf5N2luh/Rz2jkXDo15Nq9sEXOy80KI/5/E9RrmFeP\nICntuUNU1RH/sbec1RCAFt38IwwjLuB+mHW48vS3TL8PP25M74gW91n/BqHrObfB\nUlB6sZLPAgMBAAECggEAGsBONnNsMgGpe/c7V/zkCD0rv2kQ7GaSh2vONQsv+800\nhLlWDVWeHHfrh9dYJV2KOYyfLleFMbFdec+9EOaSxtmc2irYamrhClTZxbvOgtT+\nE7UeRGMcw9KuHf9rmoxsExihJelitEV/pt/uCJo2P2wesbEPeo4h8Y6YlsklyCZc\n5e8FRuJUqEtz84ve2vtrH0iwZJcE9M4+Kukh8AmrjB4me0aLjVh1wAPZ8xjV4YL6\nidzfjRmrk0S63eFAohDcrRimRo2cLzaYbxsTwZXDbZvIxUqbIMqlGcS7fuubsIGx\n4zF7sAbFdVvG7JwU4XcEsbYt2zoSppxDsi/ISPT4AQKBgQDXyV25MlaoUFYGeNkS\ni9IJDwa5yomLrgJShGPYBsVZp7k0njiMlNEWLRWVScAhd6NwC6rdqqL3aUlP97x3\nAionv6GpRbS4rD4LruODCd6jpoDmyExSUOLuycE1wz+iUNjaZijDCyqHiyJ1oSao\n1UOSftDLNHVQ9Uys4Ljwkbi6gQKBgQDWztLTt4GrTr6wVST9g7BmLY9SJWvDHkZE\naJoxNp33eQe9YrxsPdJDVpz4lfJMgpmlflCSS1E/60TNDGr/tj38fOtviw2spYuW\nh6ldKR6HDnJRHn1JE2PXAJjrdPs+xqGKcXbZNGFqhnK44vvBO0mnqwpMDq0mo+NS\njOOw5kuFTwKBgGvpUat51whZFIwsBzJVJfZNw2lKNjraDGNDvcKcsDjDvcTokxMK\noP1cEn0T4rdZ4yv3Sb2Mxe7Agl8xXtiNBpPWK3xBVb08tdKV5UT0vJhOfgvrgu9v\nb+1GjA7c04fSsn+VszDG9r/N/q+gpXqtHBu4u6XDWB/ibDPQNexok18BAoGAaONq\n3MiRP5Xe1Plua3/fJbV/cywkl4zz4Ll2+SrjLZDir55DxVLWldz4HwYQ3z0ySzYH\nn7e5P83gtYMnyB8z21MgH0I19iSLqYAqufu3FVl/ho6tvH4EVVrMUMS5Xejdvl0z\nHFJQcxSddhwXtD3/9Cg3ifXspJ6IBKoZECsTm08CgYEAhLwpzNROvNZRDlDEi5ef\ngCqD+shF/wVa2BH5iXz52LEXzkyh401tBa2rREm9sACwErDPGA5MsSDqLU/lqdke\neDCeOyCReJc/TsStfGQnvnlWQogE+TZ9xgMqBnD1v4Sy2UkTibPh2/3DNQdcd4tN\n4tzo2nmHQ/E1j8uk2pCfkWY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-zt3sb@registro-de-estoque.iam.gserviceaccount.com",
+  "client_id": "116644956460365070910",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-zt3sb%40registro-de-estoque.iam.gserviceaccount.com"
+}
