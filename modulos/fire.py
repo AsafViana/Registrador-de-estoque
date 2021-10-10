@@ -14,9 +14,9 @@ refstoque = db.reference('estoque')
 refusuario = db.reference('usuarios')
 
 
-def adicionar(lista=list, loja: str = '', produto: str = 'Nada'):
+def adicionar(lista = dict, loja: str = '', produto_nome: str = 'Nada'):
     loja = refstoque.child(loja)
-    produto = loja.child(produto)
+    produto = loja.child(produto_nome)
     produto.update(lista)
 
 

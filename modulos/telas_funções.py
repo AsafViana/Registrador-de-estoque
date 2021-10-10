@@ -140,13 +140,11 @@ def chama_segunda_tela():
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
     try:
-        print(mercadoria_lista)
         for x in range(0, len(mercadoria_lista)):
             formulario_tela.tabela.setItem(x, 0, QtWidgets.QTableWidgetItem(mercadoria_lista[x]))
             i = endereço.child(mercadoria_lista[x])
             informações_produtos = i.get()
             informações_produtos_lista = list(informações_produtos.keys())
-            print(informações_produtos_lista, parametros_nomes)
 
             for y in range(0, 4):
                 if parametros_nomes[0] == informações_produtos_lista[y]:  # categoria
@@ -160,7 +158,6 @@ def chama_segunda_tela():
                     formulario_tela.tabela.setItem(x, 3, QtWidgets.QTableWidgetItem(str(informações_produtos['preço'])))
 
                 elif informações_produtos_lista[y] == parametros_nomes[3]:  # Quantidade
-                    print(True)
                     formulario_tela.tabela.setItem(x, 4,
                                                    QtWidgets.QTableWidgetItem(str(informações_produtos['quantidade'])))
 
@@ -294,6 +291,43 @@ def voltar():
 def recarregar():
     formulario_tela.close()
     chama_segunda_tela()
+
+
+def mais():
+    loja, mercadoria, parametros_tag, endereço = loja_mercadoria_e_parametros_endereço()
+    linha = formulario_tela.tabela.currentRow()
+    endereço = refstoque.child(loja)
+    item = endereço.child(mercadoria[linha])
+    informações = item.get()
+
+    soma = informações['quantidade'] + 1
+    print()
+    adicionar(
+        lista={'quantidade': soma},
+        loja=loja,
+        produto_nome=mercadoria[linha]
+    )
+
+    formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(soma)))
+
+
+
+def menos():
+    loja, mercadoria, parametros_tag, endereço = loja_mercadoria_e_parametros_endereço()
+    linha = formulario_tela.tabela.currentRow()
+    endereço = refstoque.child(loja)
+    item = endereço.child(mercadoria[linha])
+    informações = item.get()
+
+    subtração = informações['quantidade'] - 1
+    print()
+    adicionar(
+        lista={'quantidade': subtração},
+        loja=loja,
+        produto_nome=mercadoria[linha]
+    )
+
+    formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(subtração)))
 
 
 dados_local = recebercripto()

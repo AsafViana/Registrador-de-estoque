@@ -11,6 +11,8 @@ except AttributeError:
 
 formulario.enviar.clicked.connect(cadastrar_produto)
 formulario.listar.clicked.connect(chama_segunda_tela)
+formulario_tela.mais.clicked.connect(mais)
+formulario_tela.menos.clicked.connect(menos)
 formulario_tela.add.clicked.connect(inicial)
 formulario_tela.recarregar.clicked.connect(recarregar)
 formulario_tela.excluir.clicked.connect(excluir)

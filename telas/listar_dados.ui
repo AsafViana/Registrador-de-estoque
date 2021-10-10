@@ -310,10 +310,10 @@ background-color: rgb(255, 0, 0);</string>
      </size>
     </property>
    </widget>
-   <widget class="QPushButton" name="add_2">
+   <widget class="QPushButton" name="menos">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>60</x>
       <y>10</y>
       <width>51</width>
       <height>41</height>
