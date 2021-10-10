@@ -6,7 +6,7 @@ import os
 dir = os.path.dirname(os.path.realpath(__file__))
 tirar = dir.find('configurações')
 dir = dir[:tirar]
-cred = credentials.Certificate(dir + r"s\login\credenciais\registro-de-estoque.json")
+cred = credentials.Certificate(dir + r"s\credenciais\registro-de-estoque.json")
 firebase_admin.initialize_app(cred, {'databaseURL': 'https://registro-de-estoque-default-rtdb.firebaseio.com/'})
 
 

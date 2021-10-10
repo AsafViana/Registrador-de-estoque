@@ -12,8 +12,7 @@ executables = [
 buildOptions = dict(
         packages = [],
         includes = ['PyQt5', "reportlab.pdfgen", 'modulos.arquivo', 'modulos.banco', 'pyautogui'],
-        include_files = ['formulario.ui', 'listar_dados.ui', 'menu_editar.ui'],
-        excludes = []
+        include_files = ['formulario.ui', 'listar_dados.ui', 'menu_editar.ui', r'modulos\icon\registro.png'],
 )
 
 setup(
