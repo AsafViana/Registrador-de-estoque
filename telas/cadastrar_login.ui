@@ -26,7 +26,7 @@
    <widget class="QPushButton" name="cadastrar">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>30</x>
       <y>600</y>
       <width>191</width>
       <height>51</height>
@@ -345,6 +345,39 @@ border-radius: 20px</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cadastrar_2">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>600</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 25px;
+background-color: rgb(213, 4, 49);</string>
+    </property>
+    <property name="text">
+     <string>VOLTAR</string>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <property name="autoRepeat">
+     <bool>false</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>
