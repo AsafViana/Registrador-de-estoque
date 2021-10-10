@@ -307,7 +307,7 @@ border-radius: 15px</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox">
+   <widget class="QSpinBox" name="quantidade">
     <property name="geometry">
      <rect>
       <x>230</x>
@@ -334,7 +334,7 @@ border-radius: 15px</string>
      <rect>
       <x>70</x>
       <y>270</y>
-      <width>101</width>
+      <width>131</width>
       <height>41</height>
      </rect>
     </property>

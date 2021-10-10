@@ -347,7 +347,7 @@ border-radius: 20px</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="cadastrar_2">
+   <widget class="QPushButton" name="voltar">
     <property name="geometry">
      <rect>
       <x>260</x>

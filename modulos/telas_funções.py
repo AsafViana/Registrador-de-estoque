@@ -91,7 +91,9 @@ def logar():
 
 
 def cadastrar_produto():
-    item = {'codigo': int(formulario.codigo.text()), 'preço': float(formulario.preco.text()), 'categoria': ''}
+    formulario.quantidade.setPrefix('UNI: ')
+    item = {'codigo': int(formulario.codigo.value()), 'preço': float(formulario.preco.value()), 'categoria': '',
+            'quantidade': formulario.quantidade.value()}
     produto = formulario.produto.text()
 
     if formulario.eletronicos.isChecked():
@@ -125,10 +127,11 @@ def cadastrar_produto():
 
 def chama_segunda_tela():
     # definindo o tamanho das colunas
-    formulario_tela.tabela.setColumnWidth(2, 150)
+    formulario_tela.tabela.setColumnWidth(2, 120)
     formulario_tela.tabela.setColumnWidth(0, 167)
-    formulario_tela.tabela.setColumnWidth(3, 130)
+    formulario_tela.tabela.setColumnWidth(3, 100)
     formulario_tela.tabela.setColumnWidth(1, 170)
+    formulario_tela.tabela.setColumnWidth(4, 150)
     formulario.close()
     formulario_tela.show()
     mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
@@ -137,23 +140,29 @@ def chama_segunda_tela():
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
     try:
-
+        print(mercadoria_lista)
         for x in range(0, len(mercadoria_lista)):
             formulario_tela.tabela.setItem(x, 0, QtWidgets.QTableWidgetItem(mercadoria_lista[x]))
             i = endereço.child(mercadoria_lista[x])
             informações_produtos = i.get()
             informações_produtos_lista = list(informações_produtos.keys())
+            print(informações_produtos_lista, parametros_nomes)
 
-            for c in range(0, 3):
-                if parametros_nomes[0] == informações_produtos_lista[c]:  # categoria
+            for y in range(0, 4):
+                if parametros_nomes[0] == informações_produtos_lista[y]:  # categoria
                     formulario_tela.tabela.setItem(x, 1, QtWidgets.QTableWidgetItem(informações_produtos['categoria']))
 
-                elif informações_produtos_lista[c] == parametros_nomes[1]:  # codigo
+                elif informações_produtos_lista[y] == parametros_nomes[1]:  # codigo
                     formulario_tela.tabela.setItem(x, 2,
                                                    QtWidgets.QTableWidgetItem(str(informações_produtos['codigo'])))
 
-                elif informações_produtos_lista[c] == parametros_nomes[2]:  # preço
+                elif informações_produtos_lista[y] == parametros_nomes[2]:  # preço
                     formulario_tela.tabela.setItem(x, 3, QtWidgets.QTableWidgetItem(str(informações_produtos['preço'])))
+
+                elif informações_produtos_lista[y] == parametros_nomes[3]:  # Quantidade
+                    print(True)
+                    formulario_tela.tabela.setItem(x, 4,
+                                                   QtWidgets.QTableWidgetItem(str(informações_produtos['quantidade'])))
 
     except:
         alert('Algo deu errado.')
@@ -276,6 +285,17 @@ def cadastro():
     cadastrar.close()
 
 
+def voltar():
+    login.show()
+    cadastrar.close()
+    pass
+
+
+def recarregar():
+    formulario_tela.close()
+    chama_segunda_tela()
+
+
 dados_local = recebercripto()
 
 
@@ -286,7 +306,7 @@ def loja_mercadoria_e_parametros_endereço():
     try:
         endereço = refstoque.child(loja)
         mercadoria = list(endereço.get())
-        parametros_nomes = ['categoria', 'codigo', 'preço']
+        parametros_nomes = ['categoria', 'codigo', 'preço', 'quantidade']
         return loja, mercadoria, parametros_nomes, endereço
 
     except:
@@ -307,3 +327,9 @@ formulario.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 tela_editar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 login.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 cadastrar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+
+formulario.quantidade.setPrefix('UNI: ')
+formulario.preco.setPrefix('R$ ')
+formulario.preco.setMaximum(999999999)
+formulario.quantidade.setMaximum(999999999)
+formulario.codigo.setMaximum(999999999)
