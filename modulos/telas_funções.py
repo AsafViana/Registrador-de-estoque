@@ -2,7 +2,8 @@ from modulos.fire import *
 from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
-from modulos.criptografia import criptografar, descriptografar
+from modulos.criptografia import *
+
 
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
@@ -14,7 +15,6 @@ dire = dire[:tirar]
 def guardar_loja(loja):
     url = dire + 'modulos\credenciais\loja.txt'
     system('NUL> ' + url)
-    print(loja)
     with open(url, 'w') as arquivo:
         arquivo.write(loja)
 
@@ -34,7 +34,7 @@ def enviarCripto(dados):
         for c in range(0, 2):
             # print(dados[tags[c]])
             if dados_local != dados:
-                arquivo.write(novos_dados[tags[c]] + '\n')
+                arquivo.write(criptografar(novos_dados[tags[c]]) + '\n')
             else:
                 pass
 
@@ -45,7 +45,7 @@ def recebercripto():
     with open(dire + 'modulos\credenciais\conta_salva.txt', 'r') as arquivo:
         c = 0
         for x in arquivo:
-            credenciais[tag[c]] = x
+            credenciais[tag[c]] = descriptografar(x)
             c += 1
     return credenciais
 
