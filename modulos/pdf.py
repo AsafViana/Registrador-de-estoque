@@ -32,24 +32,24 @@ def pdf():
     dados_lidos = endereço.get()
     print(dados_lidos)
     y = 0
-    pdf = canvas.Canvas("cadastro_produtos.pdf")
+    pdf = canvas.Canvas(diretorio + "cadastro_produtos.pdf", pagesize=A4)
     pdf.setFont("Times-Bold", 25)
     pdf.drawString(200, 800, "Produtos cadastrados:")
     pdf.setFont("Times-Bold", 18)
 
-    pdf.drawString(10, 750, "PRODUTO")
-    pdf.drawString(110, 750, "CATEGORIA")
-    pdf.drawString(210, 750, "CODIGO")
-    pdf.drawString(310, 750, "PREÇO")
-    pdf.drawString(410, 750, "QUANTIDADE")
+    pdf.drawString(20, 750, "PRODUTO")
+    pdf.drawString(130, 750, "CATEGORIA")
+    pdf.drawString(260, 750, "CODIGO")
+    pdf.drawString(354, 750, "PREÇO")
+    pdf.drawString(440, 750, "QUANTIDADE")
 
     for i in range(0, len(dados_lidos)):
         y = y + 50
-        pdf.drawString(10, 750 - y, str(dados_lidos[i]['produto']))
-        pdf.drawString(110, 750 - y, str(dados_lidos[i]['categoria']))
-        pdf.drawString(210, 750 - y, str(dados_lidos[i]['codigo']))
-        pdf.drawString(310, 750 - y, str(dados_lidos[i]['preco']))
-        pdf.drawString(410, 750 - y, str(dados_lidos[i]['quantidade']))
+        pdf.drawString(20, 750 - y, dados_lidos[i]['produto'])
+        pdf.drawString(130, 750 - y, dados_lidos[i]['categoria'])
+        pdf.drawString(260, 750 - y, dados_lidos[i]['codigo'])
+        pdf.drawString(354, 750 - y, dados_lidos[i]['preco'])
+        pdf.drawString(440, 750 - y, dados_lidos[i]['quantidade'])
 
     pdf.save()
     alert("PDF FOI GERADO COM SUCESSO!")
