@@ -3,6 +3,11 @@ from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
 from modulos.criptografia import *
+from tkinter.filedialog import askdirectory
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+import os
+from datetime import date
 
 
 dire = os.path.dirname(os.path.realpath(__file__))
@@ -182,19 +187,39 @@ def excluir():
 
 
 def pdf():
-    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
-    estoque_nome = list(mercadoria_lista.get())
-    dados_lidos = []
+    pasta = askdirectory()
+    loja = receber_loja()
+    endereço = refstoque.child(loja)
+    dados_lidos = endereço.get()
+    produtos = list(dados_lidos)
 
-    for c in range(0, len(estoque_nome)):
-        tudo = {'nome': estoque_nome[c]}
-        parametros = mercadoria_lista.child(estoque_nome[c]).get()
+    if pasta == '':
+        pass
 
-        for informações in parametros:
-            tudo[informações] = parametros[informações]
-        dados_lidos.append(list(tudo.values()))
-    # print(dados_lidos)
-    alert("PDF FOI GERADO COM SUCESSO!")
+    else:
+        y = 0
+        pdf = canvas.Canvas(pasta + f"/cadastro_produtos ({date.today()}).pdf", pagesize=A4)
+        pdf.setFont("Times-Bold", 25)
+        pdf.drawString(200, 800, "Produtos cadastrados:")
+        pdf.setFont("Times-Bold", 18)
+
+        pdf.drawString(20, 750, "PRODUTO")
+        pdf.drawString(130, 750, "CATEGORIA")
+        pdf.drawString(260, 750, "CODIGO")
+        pdf.drawString(354, 750, "PREÇO")
+        pdf.drawString(440, 750, "QUANTIDADE")
+        y = y + 50
+
+        for h in range(0, len(dados_lidos.keys())):
+            y = y + 50
+            pdf.drawString(20, 750 - y, produtos[h])
+            pdf.drawString(130, 750 - y, str(dados_lidos[produtos[h]]['categoria']))
+            pdf.drawString(260, 750 - y, str(dados_lidos[produtos[h]]['codigo']))
+            pdf.drawString(354, 750 - y, str(dados_lidos[produtos[h]]['preço']))
+            pdf.drawString(450, 750 - y, str(dados_lidos[produtos[h]]['quantidade']))
+
+        pdf.save()
+        alert("PDF FOI GERADO COM SUCESSO!")
 
 
 def abrir_editar():
