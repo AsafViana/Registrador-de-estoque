@@ -3,7 +3,6 @@ from reportlab.lib.pagesizes import A4
 import os
 from datetime import date
 from pyautogui import alert
-from modulos.telas_funções import loja_mercadoria_e_parametros_endereço
 from fire import refstoque
 
 
@@ -17,9 +16,20 @@ def criar_pdf():
     cnv.save()
 criar_pdf()
 
+url = diretorio + 'modulos\credenciais\loja.txt'
+print(url)
+def receber_loja():
+    url = diretorio + 'modulos\credenciais\loja.txt'
+    print(url)
+    with open(url, 'r') as arquivo:
+        loja = arquivo.read()
+    return loja
+
+
 def pdf():
-    loja, mercadoria, parametros, endereço = loja_mercadoria_e_parametros_endereço()
-    dados_lidos = refstoque.child(loja)
+    loja = receber_loja()
+    endereço = refstoque.child(loja)
+    dados_lidos = endereço.get()
     print(dados_lidos)
     y = 0
     pdf = canvas.Canvas("cadastro_produtos.pdf")

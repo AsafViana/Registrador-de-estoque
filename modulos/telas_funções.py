@@ -48,8 +48,6 @@ def recebercripto():
             credenciais[tag[c]] = descriptografar(x)
             c += 1
     return credenciais
-
-
 # ======================================================
 
 usuarios = refusuario.get()
@@ -60,7 +58,7 @@ def logar():
     usuario = login.usuario.text()
     senha_tela = login.senha.text()
     usuarios_lista = list(usuarios.keys())
-    usuarios_lista.append(usuario)
+
 
     if usuario in usuarios_lista:
         dados_banco = usuarios[usuario]
@@ -80,11 +78,11 @@ def logar():
                     alert('Preencha o formulario a seguir:')
                     cadastrar_tela()
 
-        enviarCripto({'usuario': usuario, 'senha': senha_banco, })
-        formulario_tela.show()
-        guardar_loja(loja)
-        chama_segunda_tela()
-        login.close()
+            enviarCripto({'usuario': usuario, 'senha': senha_banco, })
+            formulario_tela.show()
+            guardar_loja(loja)
+            chama_segunda_tela()
+            login.close()
 
     else:
         alert('Usuario incorreto')
@@ -95,6 +93,7 @@ def cadastrar_produto():
     item = {'codigo': int(formulario.codigo.value()), 'preço': float(formulario.preco.value()), 'categoria': '',
             'quantidade': formulario.quantidade.value()}
     produto = formulario.produto.text()
+    print(produto, item)
 
     if formulario.eletronicos.isChecked():
         # print("Categoria Eletronicos selecionada")
@@ -113,16 +112,17 @@ def cadastrar_produto():
         adicionar(
             lista=item,
             loja=nome_loja,
-            produto=produto
+            produto_nome=produto
         )
 
     except:
         alert('Algo deu errado!!!')
     else:
         alert('Produto cadastrado com sucesso')
-    formulario.codigo.setText("")
+    formulario.codigo.setValue(0)
     formulario.produto.setText("")
-    formulario.preco.setText("")
+    formulario.preco.setValue(0)
+    formulario.quantidade.setValue(0)
 
 
 def chama_segunda_tela():
