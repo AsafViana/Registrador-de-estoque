@@ -29,4 +29,3 @@ cadastrar.voltar.clicked.connect(voltar)
 
 login.show()
 app.exec()
-exit()

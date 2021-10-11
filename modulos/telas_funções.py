@@ -3,7 +3,6 @@ from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
 from modulos.criptografia import *
-from tkinter.filedialog import askdirectory
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 import os
@@ -48,7 +47,6 @@ def enviarCripto(dados):
 
 
 def recebercripto():
-
     tag = ['usuario', 'senha']
     arquivo = dire + 'modulos\credenciais\conta_salva.txt'
     result = arquivo_existe(arquivo)
@@ -195,18 +193,17 @@ def excluir():
 
 
 def pdf():
-    pasta = askdirectory()
-    loja = receber_loja()
-    endereço = refstoque.child(loja)
-    dados_lidos = endereço.get()
-    produtos = list(dados_lidos)
-
+    pasta = str(QtWidgets.QFileDialog.getExistingDirectory(formulario_tela, "Select Directory"))
     if pasta == '':
         pass
-
     else:
+        loja = receber_loja()
+        endereço = refstoque.child(loja)
+        dados_lidos = endereço.get()
+        produtos = list(dados_lidos)
+
         y = 0
-        pdf = canvas.Canvas(pasta + f"/cadastro_produtos ({date.today()}).pdf", pagesize=A4)
+        pdf = canvas.Canvas(pasta + f"/Relatório do estoque de {loja} ({date.today()}).pdf", pagesize=A4)
         pdf.setFont("Times-Bold", 25)
         pdf.drawString(200, 800, "Produtos cadastrados:")
         pdf.setFont("Times-Bold", 18)
@@ -357,6 +354,8 @@ def menos():
     )
 
     formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(subtração)))
+
+
 # ============================================
 
 def loja_mercadoria_e_parametros_endereço():
@@ -369,20 +368,22 @@ def loja_mercadoria_e_parametros_endereço():
 
     except:
         pass
+
+
 # ======================================================
 
 app = QtWidgets.QApplication([])
-formulario = uic.loadUi("telas/formulario.ui")
-formulario_tela = uic.loadUi("telas/listar_dados.ui")
-tela_editar = uic.loadUi("telas/menu_editar.ui")
-login = uic.loadUi("telas/login.ui")
-cadastrar = uic.loadUi("telas/cadastrar_login.ui")
+formulario = uic.loadUi(dire + r"modulos/telas/formulario.ui")
+formulario_tela = uic.loadUi(dire + r"modulos/telas/listar_dados.ui")
+tela_editar = uic.loadUi(dire + r"modulos/telas/menu_editar.ui")
+login = uic.loadUi(dire + r"modulos/telas/login.ui")
+cadastrar = uic.loadUi(dire + r"modulos/telas/cadastrar_login.ui")
 
-formulario_tela.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
-formulario.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
-tela_editar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
-login.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
-cadastrar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+formulario_tela.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
+formulario.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
+tela_editar.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
+login.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
+cadastrar.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
 
 formulario.quantidade.setPrefix('UNI: ')
 formulario.preco.setPrefix('R$ ')

@@ -301,7 +301,7 @@ background-color: rgb(255, 0, 0);</string>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../modulos/icon/reload-webpage_icon-icons.com_53905.png</normaloff>../modulos/icon/reload-webpage_icon-icons.com_53905.png</iconset>
+      <normaloff>../icon/reload-webpage_icon-icons.com_53905.png</normaloff>../icon/reload-webpage_icon-icons.com_53905.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -332,7 +332,7 @@ background-color: rgb(255, 0, 0);</string>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../modulos/icon/seta-baixo.png</normaloff>../modulos/icon/seta-baixo.png</iconset>
+      <normaloff>../icon/seta-baixo.png</normaloff>../icon/seta-baixo.png</iconset>
     </property>
     <property name="iconSize">
      <size>
@@ -363,7 +363,7 @@ background-color: rgb(255, 0, 0);</string>
     </property>
     <property name="icon">
      <iconset>
-      <normaloff>../modulos/icon/seta-cima.png</normaloff>../modulos/icon/seta-cima.png</iconset>
+      <normaloff>../icon/seta-cima.png</normaloff>../icon/seta-cima.png</iconset>
     </property>
     <property name="iconSize">
      <size>
