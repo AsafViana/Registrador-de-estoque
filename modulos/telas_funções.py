@@ -370,8 +370,6 @@ def loja_mercadoria_e_parametros_endereço():
 
     except:
         pass
-
-
 # ======================================================
 
 app = QtWidgets.QApplication([])

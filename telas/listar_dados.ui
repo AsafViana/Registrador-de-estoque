@@ -261,7 +261,7 @@ background-color: rgb(255, 0, 0);</string>
    <widget class="QPushButton" name="add">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>10</x>
       <y>10</y>
       <width>51</width>
       <height>41</height>
@@ -282,7 +282,7 @@ background-color: rgb(255, 0, 0);</string>
    <widget class="QPushButton" name="recarregar">
     <property name="geometry">
      <rect>
-      <x>660</x>
+      <x>60</x>
       <y>10</y>
       <width>51</width>
       <height>41</height>
@@ -313,7 +313,7 @@ background-color: rgb(255, 0, 0);</string>
    <widget class="QPushButton" name="menos">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>660</x>
       <y>10</y>
       <width>51</width>
       <height>41</height>
@@ -344,7 +344,7 @@ background-color: rgb(255, 0, 0);</string>
    <widget class="QPushButton" name="mais">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>610</x>
       <y>10</y>
       <width>51</width>
       <height>41</height>
