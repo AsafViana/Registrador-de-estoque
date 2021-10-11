@@ -2,7 +2,13 @@ from modulos.fire import *
 from pyautogui import alert, confirm
 from PyQt5 import uic, QtWidgets, QtGui
 from os import system
-from modulos.criptografia import criptografar, descriptografar
+from modulos.criptografia import *
+from tkinter.filedialog import askdirectory
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+import os
+from datetime import date
+
 
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
@@ -14,7 +20,6 @@ dire = dire[:tirar]
 def guardar_loja(loja):
     url = dire + 'modulos\credenciais\loja.txt'
     system('NUL> ' + url)
-    print(loja)
     with open(url, 'w') as arquivo:
         arquivo.write(loja)
 
@@ -34,7 +39,7 @@ def enviarCripto(dados):
         for c in range(0, 2):
             # print(dados[tags[c]])
             if dados_local != dados:
-                arquivo.write(novos_dados[tags[c]] + '\n')
+                arquivo.write(criptografar(novos_dados[tags[c]]) + '\n')
             else:
                 pass
 
@@ -45,11 +50,9 @@ def recebercripto():
     with open(dire + 'modulos\credenciais\conta_salva.txt', 'r') as arquivo:
         c = 0
         for x in arquivo:
-            credenciais[tag[c]] = x
+            credenciais[tag[c]] = descriptografar(x)
             c += 1
     return credenciais
-
-
 # ======================================================
 
 usuarios = refusuario.get()
@@ -60,7 +63,7 @@ def logar():
     usuario = login.usuario.text()
     senha_tela = login.senha.text()
     usuarios_lista = list(usuarios.keys())
-    usuarios_lista.append(usuario)
+
 
     if usuario in usuarios_lista:
         dados_banco = usuarios[usuario]
@@ -80,19 +83,22 @@ def logar():
                     alert('Preencha o formulario a seguir:')
                     cadastrar_tela()
 
-        enviarCripto({'usuario': usuario, 'senha': senha_banco, })
-        formulario_tela.show()
-        guardar_loja(loja)
-        chama_segunda_tela()
-        login.close()
+            enviarCripto({'usuario': usuario, 'senha': senha_banco, })
+            formulario_tela.show()
+            guardar_loja(loja)
+            chama_segunda_tela()
+            login.close()
 
     else:
         alert('Usuario incorreto')
 
 
 def cadastrar_produto():
-    item = {'codigo': int(formulario.codigo.text()), 'preço': float(formulario.preco.text()), 'categoria': ''}
+    formulario.quantidade.setPrefix('UNI: ')
+    item = {'codigo': int(formulario.codigo.value()), 'preço': float(formulario.preco.value()), 'categoria': '',
+            'quantidade': formulario.quantidade.value()}
     produto = formulario.produto.text()
+    print(produto, item)
 
     if formulario.eletronicos.isChecked():
         # print("Categoria Eletronicos selecionada")
@@ -111,24 +117,26 @@ def cadastrar_produto():
         adicionar(
             lista=item,
             loja=nome_loja,
-            produto=produto
+            produto_nome=produto
         )
 
     except:
         alert('Algo deu errado!!!')
     else:
         alert('Produto cadastrado com sucesso')
-    formulario.codigo.setText("")
+    formulario.codigo.setValue(0)
     formulario.produto.setText("")
-    formulario.preco.setText("")
+    formulario.preco.setValue(0)
+    formulario.quantidade.setValue(0)
 
 
 def chama_segunda_tela():
     # definindo o tamanho das colunas
-    formulario_tela.tabela.setColumnWidth(2, 150)
+    formulario_tela.tabela.setColumnWidth(2, 120)
     formulario_tela.tabela.setColumnWidth(0, 167)
-    formulario_tela.tabela.setColumnWidth(3, 130)
+    formulario_tela.tabela.setColumnWidth(3, 100)
     formulario_tela.tabela.setColumnWidth(1, 170)
+    formulario_tela.tabela.setColumnWidth(4, 150)
     formulario.close()
     formulario_tela.show()
     mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
@@ -137,23 +145,26 @@ def chama_segunda_tela():
 
     formulario_tela.tabela.setRowCount(len(mercadoria_lista))
     try:
-
         for x in range(0, len(mercadoria_lista)):
             formulario_tela.tabela.setItem(x, 0, QtWidgets.QTableWidgetItem(mercadoria_lista[x]))
             i = endereço.child(mercadoria_lista[x])
             informações_produtos = i.get()
             informações_produtos_lista = list(informações_produtos.keys())
 
-            for c in range(0, 3):
-                if parametros_nomes[0] == informações_produtos_lista[c]:  # categoria
+            for y in range(0, 4):
+                if parametros_nomes[0] == informações_produtos_lista[y]:  # categoria
                     formulario_tela.tabela.setItem(x, 1, QtWidgets.QTableWidgetItem(informações_produtos['categoria']))
 
-                elif informações_produtos_lista[c] == parametros_nomes[1]:  # codigo
+                elif informações_produtos_lista[y] == parametros_nomes[1]:  # codigo
                     formulario_tela.tabela.setItem(x, 2,
                                                    QtWidgets.QTableWidgetItem(str(informações_produtos['codigo'])))
 
-                elif informações_produtos_lista[c] == parametros_nomes[2]:  # preço
+                elif informações_produtos_lista[y] == parametros_nomes[2]:  # preço
                     formulario_tela.tabela.setItem(x, 3, QtWidgets.QTableWidgetItem(str(informações_produtos['preço'])))
+
+                elif informações_produtos_lista[y] == parametros_nomes[3]:  # Quantidade
+                    formulario_tela.tabela.setItem(x, 4,
+                                                   QtWidgets.QTableWidgetItem(str(informações_produtos['quantidade'])))
 
     except:
         alert('Algo deu errado.')
@@ -176,19 +187,39 @@ def excluir():
 
 
 def pdf():
-    mercadoria_lista = loja_mercadoria_e_parametros_endereço()[1]
-    estoque_nome = list(mercadoria_lista.get())
-    dados_lidos = []
+    pasta = askdirectory()
+    loja = receber_loja()
+    endereço = refstoque.child(loja)
+    dados_lidos = endereço.get()
+    produtos = list(dados_lidos)
 
-    for c in range(0, len(estoque_nome)):
-        tudo = {'nome': estoque_nome[c]}
-        parametros = mercadoria_lista.child(estoque_nome[c]).get()
+    if pasta == '':
+        pass
 
-        for informações in parametros:
-            tudo[informações] = parametros[informações]
-        dados_lidos.append(list(tudo.values()))
-    # print(dados_lidos)
-    alert("PDF FOI GERADO COM SUCESSO!")
+    else:
+        y = 0
+        pdf = canvas.Canvas(pasta + f"/cadastro_produtos ({date.today()}).pdf", pagesize=A4)
+        pdf.setFont("Times-Bold", 25)
+        pdf.drawString(200, 800, "Produtos cadastrados:")
+        pdf.setFont("Times-Bold", 18)
+
+        pdf.drawString(20, 750, "PRODUTO")
+        pdf.drawString(130, 750, "CATEGORIA")
+        pdf.drawString(260, 750, "CODIGO")
+        pdf.drawString(354, 750, "PREÇO")
+        pdf.drawString(440, 750, "QUANTIDADE")
+        y = y + 50
+
+        for h in range(0, len(dados_lidos.keys())):
+            y = y + 50
+            pdf.drawString(20, 750 - y, produtos[h])
+            pdf.drawString(130, 750 - y, str(dados_lidos[produtos[h]]['categoria']))
+            pdf.drawString(260, 750 - y, str(dados_lidos[produtos[h]]['codigo']))
+            pdf.drawString(354, 750 - y, str(dados_lidos[produtos[h]]['preço']))
+            pdf.drawString(450, 750 - y, str(dados_lidos[produtos[h]]['quantidade']))
+
+        pdf.save()
+        alert("PDF FOI GERADO COM SUCESSO!")
 
 
 def abrir_editar():
@@ -276,6 +307,54 @@ def cadastro():
     cadastrar.close()
 
 
+def voltar():
+    login.show()
+    cadastrar.close()
+    pass
+
+
+def recarregar():
+    formulario_tela.close()
+    chama_segunda_tela()
+
+
+def mais():
+    loja, mercadoria, parametros_tag, endereço = loja_mercadoria_e_parametros_endereço()
+    linha = formulario_tela.tabela.currentRow()
+    endereço = refstoque.child(loja)
+    item = endereço.child(mercadoria[linha])
+    informações = item.get()
+
+    soma = informações['quantidade'] + 1
+    print()
+    adicionar(
+        lista={'quantidade': soma},
+        loja=loja,
+        produto_nome=mercadoria[linha]
+    )
+
+    formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(soma)))
+
+
+
+def menos():
+    loja, mercadoria, parametros_tag, endereço = loja_mercadoria_e_parametros_endereço()
+    linha = formulario_tela.tabela.currentRow()
+    endereço = refstoque.child(loja)
+    item = endereço.child(mercadoria[linha])
+    informações = item.get()
+
+    subtração = informações['quantidade'] - 1
+    print()
+    adicionar(
+        lista={'quantidade': subtração},
+        loja=loja,
+        produto_nome=mercadoria[linha]
+    )
+
+    formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(subtração)))
+
+
 dados_local = recebercripto()
 
 
@@ -286,13 +365,11 @@ def loja_mercadoria_e_parametros_endereço():
     try:
         endereço = refstoque.child(loja)
         mercadoria = list(endereço.get())
-        parametros_nomes = ['categoria', 'codigo', 'preço']
+        parametros_nomes = ['categoria', 'codigo', 'preço', 'quantidade']
         return loja, mercadoria, parametros_nomes, endereço
 
     except:
         pass
-
-
 # ======================================================
 
 app = QtWidgets.QApplication([])
@@ -307,3 +384,9 @@ formulario.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 tela_editar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 login.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
 cadastrar.setWindowIcon(QtGui.QIcon(r'modulos\icon\registro.png'))
+
+formulario.quantidade.setPrefix('UNI: ')
+formulario.preco.setPrefix('R$ ')
+formulario.preco.setMaximum(999999999)
+formulario.quantidade.setMaximum(999999999)
+formulario.codigo.setMaximum(999999999)

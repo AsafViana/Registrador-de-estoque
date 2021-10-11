@@ -35,5 +35,5 @@ def descriptografar(mensagem):
 
     # converte a lista em string novamente
     cifrada = "".join(cifrada)
-    return cifrada[:-1]
+    return cifrada
 

@@ -1,5 +1,7 @@
-from modulos.criptografia import *
+from modulos.fire import *
 
-
-print(descriptografar('ormd#5') + '\n')
-print(criptografar('loja'))
+adicionar(
+    lista={'quantidade': 3},
+    loja='loja 2',
+    produto_nome='celular'
+)
