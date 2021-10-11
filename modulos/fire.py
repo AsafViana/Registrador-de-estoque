@@ -14,9 +14,8 @@ refusuario = db.reference('usuarios')
 
 
 def adicionar(lista=dict, loja: str = '', produto_nome: str = 'Nada'):
-    loja = refstoque.child(loja)
-    produto = loja.child(produto_nome)
-    produto.update(lista)
+    loja = refstoque.child(loja+ '/' + produto_nome)
+    loja.update(lista)
 
 
 def atualizar_nome(nome_antigo=str, novo_nome=str, loja=str, backup=dict):

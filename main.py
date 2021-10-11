@@ -8,6 +8,8 @@ try:
     login.senha.setText(dados['senha'][:-1])
 except AttributeError:
     pass
+except KeyError:
+    pass
 
 formulario.enviar.clicked.connect(cadastrar_produto)
 formulario.listar.clicked.connect(chama_segunda_tela)

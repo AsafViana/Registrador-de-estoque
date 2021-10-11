@@ -8,7 +8,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 import os
 from datetime import date
-
+from modulos.arquivo import *
 
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
@@ -34,8 +34,11 @@ def receber_loja():
 def enviarCripto(dados):
     tags = ['usuario', 'senha']
     novos_dados = dados
-    # print(novos_dados)
-    with open('modulos\credenciais\conta_salva.txt', 'w') as arquivo:
+    arquivo = dire + 'modulos\credenciais\conta_salva.txt'
+    result = arquivo_existe(arquivo)
+    if result == False: criar_arquivo(arquivo)
+
+    with open(arquivo, 'w') as arquivo:
         for c in range(0, 2):
             # print(dados[tags[c]])
             if dados_local != dados:
@@ -45,14 +48,21 @@ def enviarCripto(dados):
 
 
 def recebercripto():
+
     tag = ['usuario', 'senha']
+    arquivo = dire + 'modulos\credenciais\conta_salva.txt'
+    result = arquivo_existe(arquivo)
+    if result == False: criar_arquivo(arquivo)
+
     credenciais = {}
-    with open(dire + 'modulos\credenciais\conta_salva.txt', 'r') as arquivo:
+    with open(arquivo, 'r') as arquivo:
         c = 0
         for x in arquivo:
             credenciais[tag[c]] = descriptografar(x)
             c += 1
     return credenciais
+
+
 # ======================================================
 
 usuarios = refusuario.get()
@@ -64,7 +74,6 @@ def logar():
     senha_tela = login.senha.text()
     usuarios_lista = list(usuarios.keys())
 
-
     if usuario in usuarios_lista:
         dados_banco = usuarios[usuario]
         senha_banco = dados_banco['senha']
@@ -74,20 +83,19 @@ def logar():
 
         else:  # cadastro deu certo
             alert(f'Bem vindo de volta, {usuario[0].upper() + usuario[1:].lower()}')
-            enviarCripto({'usuario': usuario, 'senha': senha_banco})
 
             if loja not in list(refstoque.get()):
-                resposta = confirm('Vi que sua loja não foi registrada. Deseja regidtrar sua loja?',
-                                   title='Loja não encontrada', buttons=['SIM', 'NÃO'])
-                if resposta == 'SIM':
-                    alert('Preencha o formulario a seguir:')
-                    cadastrar_tela()
+                enviarCripto({'usuario': usuario, 'senha': senha_banco, })
+                formulario.show()
+                guardar_loja(loja)
+                login.close()
 
-            enviarCripto({'usuario': usuario, 'senha': senha_banco, })
-            formulario_tela.show()
-            guardar_loja(loja)
-            chama_segunda_tela()
-            login.close()
+            else:
+                enviarCripto({'usuario': usuario, 'senha': senha_banco, })
+                formulario_tela.show()
+                guardar_loja(loja)
+                chama_segunda_tela()
+                login.close()
 
     else:
         alert('Usuario incorreto')
@@ -113,7 +121,7 @@ def cadastrar_produto():
         item['categoria'] = "Eletronicos"
 
     try:
-        nome_loja = loja_mercadoria_e_parametros_endereço()[0]
+        nome_loja = receber_loja()
         adicionar(
             lista=item,
             loja=nome_loja,
@@ -271,9 +279,6 @@ def salvar_valor_editado():
     chama_segunda_tela()
 
 
-enviarCripto(usuarios['asaf'])
-
-
 def cadastrar_tela():
     cadastrar.show()
     login.close()
@@ -336,7 +341,6 @@ def mais():
     formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(soma)))
 
 
-
 def menos():
     loja, mercadoria, parametros_tag, endereço = loja_mercadoria_e_parametros_endereço()
     linha = formulario_tela.tabela.currentRow()
@@ -353,11 +357,6 @@ def menos():
     )
 
     formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(subtração)))
-
-
-dados_local = recebercripto()
-
-
 # ============================================
 
 def loja_mercadoria_e_parametros_endereço():
