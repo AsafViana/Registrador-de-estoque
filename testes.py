@@ -1,7 +1,9 @@
 from modulos.fire import *
 
-adicionar(
-    lista={'quantidade': 3, 'preço': 2345},
-    loja='americas',
-    produto_nome='celular'
-)
+dados_recebidos = {
+    'nome': 'sy',
+    'categoria': 'Eletronicos',
+    'codigo': int(1),
+    'preço': float(0)
+}
+atualizar('americas', dados_recebidos, 0)
