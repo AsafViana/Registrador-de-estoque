@@ -312,7 +312,6 @@ def cadastro():
 def voltar():
     login.show()
     cadastrar.close()
-    pass
 
 
 def recarregar():

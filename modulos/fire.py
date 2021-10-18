@@ -18,16 +18,18 @@ def adicionar(lista=dict, loja: str = '', produto_nome: str = 'Nada'):
     loja.update(lista)
 
 
-def atualizar_nome(nome_antigo=str, novo_nome=str, loja=str, backup=dict):
-    item_antigo = refstoque.child(loja + '/' + nome_antigo)
+def atualizar_nome(nome_antigo=str, novo_nome=str, loja=str):
+    item_antigo = refstoque.child(rf'{loja}/{nome_antigo}')
+    backup = item_antigo.get()
+    adicionar(loja=loja, produto_nome=novo_nome, lista=backup)
     item_antigo.delete()
-    adicionar(loja=loja, produto=novo_nome, lista=backup)
 
 
 def atualizar(loja=str, novos_dados=dict, linha=int):
     produtos = list(refstoque.child(loja).get())
 
-    backup = refstoque.child(loja + '/' + produtos[linha]).get()
+    backupa = refstoque.child(loja + '/' + produtos[linha])
+    backup = backupa.get()
     backup['nome'] = produtos[linha]
 
     tag_dados = ['nome', 'categoria', 'codigo', 'preço']
@@ -38,11 +40,9 @@ def atualizar(loja=str, novos_dados=dict, linha=int):
             relação[tag_dados[c]] = True
         else:
             relação[tag_dados[c]] = False
-    print(relação)
 
-    if relação['nome'] == False:
-        backup.pop('nome')
-        atualizar_nome(produtos[linha], novos_dados['nome'], loja, backup)
+    if not relação['nome']:
+        atualizar_nome(nome_antigo=backup['nome'], novo_nome=novos_dados['nome'], loja=loja)
         atualizar(loja, novos_dados, linha)
 
     else:
@@ -50,7 +50,7 @@ def atualizar(loja=str, novos_dados=dict, linha=int):
         relação, backup, novos_dados.pop('nome')
         tag_dados.remove('nome')
         for x in range(0, len(tag_dados)):
-            if relação[tag_dados[x]] == False:
+            if not relação[tag_dados[x]]:
                 mais = refstoque.child(loja + '/' + nome_do_produto)
                 mais.update({tag_dados[x]: novos_dados[tag_dados[x]]})
             else:
