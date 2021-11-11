@@ -6,13 +6,15 @@ def arquivo_existe(nome):
     else:
         return True
 
+
 def pasta_existe(dir=str):
     try:
-        a = open(dir . nome)
+        a = open(dir.nome)
     except:
         return False
     else:
         return True
+
 
 def criar_arquivo(nome):
     try:
@@ -22,6 +24,7 @@ def criar_arquivo(nome):
         print('\033[31mFalha na criação do arquivo!\033[m')
     else:
         print(f'\033[32mArquivo {nome} criado com sucesso!\033[m')
+
 
 def ler_arquivo(nome):
     try:

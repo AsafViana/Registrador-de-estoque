@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>437</width>
-    <height>758</height>
+    <width>441</width>
+    <height>767</height>
    </rect>
   </property>
   <property name="font">
@@ -19,7 +19,8 @@
    <string>CADASTRO</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(2, 2, 2);
+   <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(2, 2, 2);
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -41,7 +42,8 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 25px;
-background-color: rgb(213, 4, 49);</string>
+background-color: rgb(213, 4, 49);
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string>CADASTRAR</string>
@@ -365,6 +367,7 @@ border-radius: 20px</string>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 25px;
+color: rgb(0, 0, 0);
 background-color: rgb(213, 4, 49);</string>
     </property>
     <property name="text">
@@ -381,17 +384,40 @@ background-color: rgb(213, 4, 49);</string>
     </property>
    </widget>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>437</width>
+     <width>441</width>
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuopi_es">
+    <property name="title">
+     <string>Opições</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionFeedback"/>
+   </widget>
+   <addaction name="menuopi_es"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionFeedback">
+   <property name="text">
+    <string>Feedback</string>
+   </property>
+  </action>
+  <action name="actionqqqqq">
+   <property name="text">
+    <string>qqqqq</string>
+   </property>
+  </action>
+  <action name="actionLogoff_2">
+   <property name="text">
+    <string>Logoff</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

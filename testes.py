@@ -1,9 +1,3 @@
-from modulos.fire import *
+from modulos.telas_funções import Feedback
 
-dados_recebidos = {
-    'nome': 'sy',
-    'categoria': 'Eletronicos',
-    'codigo': int(1),
-    'preço': float(0)
-}
-atualizar('americas', dados_recebidos, 0)
+Feedback()

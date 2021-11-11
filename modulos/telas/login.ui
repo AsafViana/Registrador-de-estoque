@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>439</width>
-    <height>600</height>
+    <width>443</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,6 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(2, 2, 2);
+color: rgb(255, 255, 255);
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -36,6 +37,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 25px;
+color: rgb(0, 0, 0);
 background-color: rgb(213, 4, 49);</string>
     </property>
     <property name="text">
@@ -196,6 +198,7 @@ border-radius: 20px</string>
     </property>
     <property name="styleSheet">
      <string notr="true">border-radius: 20px;
+color: rgb(0, 0, 0);
 background-color: rgb(213, 4, 49);</string>
     </property>
     <property name="text">
@@ -217,12 +220,29 @@ background-color: rgb(213, 4, 49);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>439</width>
-     <height>26</height>
+     <width>443</width>
+     <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuOp_es">
+    <property name="title">
+     <string>Opições</string>
+    </property>
+    <addaction name="actionFeedback"/>
+   </widget>
+   <addaction name="menuOp_es"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionFeedback">
+   <property name="text">
+    <string>Feedback</string>
+   </property>
+  </action>
+  <action name="actionLogoff">
+   <property name="text">
+    <string>Logoff</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
