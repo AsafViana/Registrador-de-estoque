@@ -69,7 +69,8 @@ background-color: rgb(213, 4, 49);</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 20px</string>
+border-radius: 20px;
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string/>
@@ -94,7 +95,8 @@ border-radius: 20px</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-color: rgb(255, 255, 255);
-border-radius: 20px</string>
+border-radius: 20px;
+color: rgb(0, 0, 0);</string>
     </property>
     <property name="text">
      <string/>
@@ -221,7 +223,7 @@ background-color: rgb(213, 4, 49);</string>
      <x>0</x>
      <y>0</y>
      <width>443</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuOp_es">

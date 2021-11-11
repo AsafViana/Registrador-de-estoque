@@ -375,34 +375,46 @@ def logout():
     pass
 
 
-class Feedback:
-    bloco = Tk()
-    bloco.title('Feedback')
-    bloco.geometry('700x500')
-
-    texto = Text(bloco)
-    texto.place(x=50, y=10, width=600, height=350)
-
-    def feedback_envio(self):
-
-        usuario = recebercripto()
-        nome_loja = receber_loja()
-        data_e_hora_atuais = datetime.now()
-        data_e_hora_em_texto = data_e_hora_atuais.strftime('%d-%m-%Y %H:%M')
-
-        mensagem = {'texto': self.texto.get('1.0', END),
-                    'Usuario': usuario['usuario'][:-1]}
-        print(data_e_hora_em_texto)
-
-        reffeed = db.reference('feedback')
-        loja = reffeed.child(data_e_hora_em_texto)
-        loja.update(mensagem)
+def feedback_abrir():
+    feedback_tela.show()
 
 
-    botão = Button(bloco, text='Enviar', command=feedback_envio)
-    botão.place(y=400, x=500, width=150, height=70)
+def feedback_abrir2():
+    feedback_tela2.show()
 
-    bloco.mainloop()
+
+def feedback_inicio():
+    mensagem = feedback_tela2.mensagem.text()
+    data_e_hora_atuais = datetime.now()
+    data_e_hora_em_texto = data_e_hora_atuais.strftime('%d-%m-%Y %H:%M')
+
+    mensagem = {'texto': mensagem,
+                'Usuario': 'Tela de Inicio'}
+    print(mensagem)
+
+    reffeed = db.reference('feedback')
+    loja = reffeed.child(data_e_hora_em_texto)
+    loja.update(mensagem)
+
+
+def feedback():
+    mensagem = feedback_tela.mensagem.text()
+    feedback_envio(mensagem)
+
+
+def feedback_envio(mensagem):
+    usuario = recebercripto()
+    nome_loja = receber_loja()
+    data_e_hora_atuais = datetime.now()
+    data_e_hora_em_texto = data_e_hora_atuais.strftime('%d-%m-%Y %H:%M')
+
+    mensagem = {'texto': mensagem,
+                'Usuario': usuario['usuario'][:-1]}
+    print(data_e_hora_em_texto)
+
+    reffeed = db.reference('feedback')
+    loja = reffeed.child(data_e_hora_em_texto)
+    loja.update(mensagem)
 
 
 # ============================================
@@ -427,6 +439,8 @@ formulario_tela = uic.loadUi(dire + r"modulos/telas/listar_dados.ui")
 tela_editar = uic.loadUi(dire + r"modulos/telas/menu_editar.ui")
 login = uic.loadUi(dire + r"modulos/telas/login.ui")
 cadastrar = uic.loadUi(dire + r"modulos/telas/cadastrar_login.ui")
+feedback_tela = uic.loadUi(dire + r'modulos\telas\feedback.ui')
+feedback_tela2 = uic.loadUi(dire + r'modulos\telas\feedback2.ui')
 
 formulario_tela.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))
 formulario.setWindowIcon(QtGui.QIcon(dire + r'modulos\icon\registro.png'))

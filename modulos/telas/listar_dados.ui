@@ -314,6 +314,28 @@ background-color: rgb(255, 0, 0);</string>
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>726</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOp_es">
+    <property name="title">
+     <string>Opções</string>
+    </property>
+    <addaction name="actionFeedback"/>
+   </widget>
+   <addaction name="menuOp_es"/>
+  </widget>
+  <action name="actionFeedback">
+   <property name="text">
+    <string>Feedback</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

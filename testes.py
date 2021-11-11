@@ -1,3 +1,4 @@
-from modulos.telas_funções import Feedback
+from modulos.telas_funções import *
 
-Feedback()
+feedback_tela.show()
+app.exec()

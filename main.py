@@ -25,6 +25,13 @@ login.entrar.clicked.connect(logar)
 login.cadastrar.clicked.connect(cadastrar_tela)
 cadastrar.cadastrar.clicked.connect(cadastro)
 cadastrar.voltar.clicked.connect(voltar)
+feedback_tela.enviar.clicked.connect(feedback)
+feedback_tela2.enviar.clicked.connect(feedback_inicio)
+login.actionFeedback.triggered.connect(feedback_abrir2)
+cadastrar.actionFeedback.triggered.connect(feedback_abrir)
+formulario.actionFeedback.triggered.connect(feedback_abrir)
+formulario_tela.actionFeedback.triggered.connect(feedback_abrir)
+tela_editar.actionFeedback.triggered.connect(feedback_abrir)
 # ======================================================
 
 login.show()
