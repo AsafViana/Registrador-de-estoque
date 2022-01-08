@@ -8,6 +8,8 @@ from reportlab.lib.pagesizes import A4
 import os
 from datetime import date
 from modulos.arquivo import *
+from modulos.Autenticação import *
+from datetime import datetime
 
 dire = os.path.dirname(os.path.realpath(__file__))
 tirar = dire.find('modulos')
@@ -69,34 +71,50 @@ dados_local = recebercripto()
 
 def logar():
     usuario = login.usuario.text()
+    senha = login.senha.text()
+
+    email = usuarios[usuario]['email']
+
+    mensagem, resultadoLogin = logando(email, senha)
+
+    if resultadoLogin:
+        alert(mensagem)
+
+    else:
+        alert(mensagem)
+
+
+
+def login():
+    usuario = login.usuario.text()
     senha_tela = login.senha.text()
     usuarios_lista = list(usuarios.keys())
 
-    if usuario in usuarios_lista:
+    mensagem, resultadoLogin = logando(usuario, senha_tela)
+
+    if resultadoLogin:
+        alert(mensagem)
+
+        guardarRefstoque = list(refstoque.get())
+
         dados_banco = usuarios[usuario]
-        senha_banco = dados_banco['senha']
         loja = dados_banco['loja']
-        if senha_banco != senha_tela:
-            alert('Senha incorreta')
 
-        else:  # cadastro deu certo
-            alert(f'Bem vindo de volta, {usuario[0].upper() + usuario[1:].lower()}')
+        if loja not in guardarRefstoque:
+            enviarCripto({'usuario': usuario, 'senha': senha_tela})
+            formulario.show()
+            guardar_loja(loja)
+            login.close()
 
-            if loja not in list(refstoque.get()):
-                enviarCripto({'usuario': usuario, 'senha': senha_banco, })
-                formulario.show()
-                guardar_loja(loja)
-                login.close()
-
-            else:
-                enviarCripto({'usuario': usuario, 'senha': senha_banco, })
-                formulario_tela.show()
-                guardar_loja(loja)
-                chama_segunda_tela()
-                login.close()
+        else:
+            enviarCripto({'usuario': usuario, 'senha': senha_tela})
+            formulario_tela.show()
+            guardar_loja(loja)
+            chama_segunda_tela()
+            login.close()
 
     else:
-        alert('Usuario incorreto')
+        alert(mensagem)
 
 
 def cadastrar_produto():
@@ -367,6 +385,10 @@ def menos():
     )
 
     formulario_tela.tabela.setItem(linha, 4, QtWidgets.QTableWidgetItem(str(subtração)))
+
+
+def logout():
+    pass
 
 
 # ============================================

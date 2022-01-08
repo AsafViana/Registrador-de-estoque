@@ -7,21 +7,22 @@ dir = os.path.dirname(os.path.realpath(__file__))
 tirar = dir.find('configurações')
 dir = dir[:tirar]
 cred = credentials.Certificate(dir + r"s\credenciais\registro-de-estoque.json")
-firebase_admin.initialize_app(cred, {'databaseURL': 'https://registro-de-estoque-default-rtdb.firebaseio.com/'})
+firebase_admin.initialize_app(cred,
+                              {'databaseURL': 'https://gerenciamento-de-estoque-9f83d-default-rtdb.firebaseio.com/'})
 
 refstoque = db.reference('estoque')
 refusuario = db.reference('usuarios')
 
 
 def adicionar(lista=dict, loja: str = '', produto_nome: str = 'Nada'):
-    loja = refstoque.child(loja+ '/' + produto_nome)
+    loja = refstoque.child(loja + '/' + produto_nome)
     loja.update(lista)
 
 
 def atualizar_nome(nome_antigo=str, novo_nome=str, loja=str):
     item_antigo = refstoque.child(rf'{loja}/{nome_antigo}')
     backup = item_antigo.get()
-    adicionar(loja=loja, produto_nome=novo_nome, lista=backup)
+    adicionar(backup, loja, novo_nome)
     item_antigo.delete()
 
 

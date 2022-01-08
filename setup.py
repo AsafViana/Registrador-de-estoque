@@ -11,7 +11,7 @@ executables = [
 
 buildOptions = dict(
         packages = [],
-        includes = ['PyQt5', "reportlab.pdfgen", 'modulos', 'pyautogui'],
+        includes = ['PyQt5', "reportlab.pdfgen", 'modulos', 'pyautogui', 'firebase_admin'],
         include_files = [],
 )
 

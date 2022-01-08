@@ -2,8 +2,8 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Registro"
-#define MyAppVersion "1.0"
-#define MyAppPublisher "Zaf"
+#define MyAppVersion "1.5"
+#define MyAppPublisher "Zaf Tech"
 #define MyAppURL "https://www.github.com/AsafViana"
 #define MyAppExeName "Registros.exe"
 #define MyAppAssocName MyAppName + " File"
@@ -26,9 +26,9 @@ ChangesAssociations=yes
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=C:\Users\asaff\OneDrive\Área de Trabalho\programação\PY\cadastro de produtos\Registrador de estoque
+OutputDir=C:\Users\asaff\OneDrive\ï¿½rea de Trabalho\programaï¿½ï¿½o\PY\cadastro de produtos\Registrador de estoque
 OutputBaseFilename=setup
-SetupIconFile=C:\Users\asaff\OneDrive\Área de Trabalho\programação\PY\cadastro de produtos\Registrador de estoque\modulos\icon\icon.ico
+SetupIconFile=C:\Users\asaff\OneDrive\ï¿½rea de Trabalho\programaï¿½ï¿½o\PY\cadastro de produtos\Registrador de estoque\modulos\icon\icon.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -40,8 +40,8 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\asaff\OneDrive\Área de Trabalho\programação\PY\cadastro de produtos\Registrador de estoque\build\Registro\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\asaff\OneDrive\Área de Trabalho\programação\PY\cadastro de produtos\Registrador de estoque\build\Registro\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\asaff\OneDrive\ï¿½rea de Trabalho\programaï¿½ï¿½o\PY\cadastro de produtos\Registrador de estoque\build\Registro\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\asaff\OneDrive\ï¿½rea de Trabalho\programaï¿½ï¿½o\PY\cadastro de produtos\Registrador de estoque\build\Registro\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
